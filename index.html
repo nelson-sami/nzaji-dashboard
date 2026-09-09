@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NZAJI Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>NZAJI</h1>
+        <h2>Plataforma Inteligente de Gestão de Água</h2>
+        <p>Luanda • Angola</p>
+        <p class="update-time" id="updateTime"></p>
+    </div>
+
+
+    <div class="seletor-reservatorio">
+
+        <label for="reservatorioSelect">
+            Reservatório:
+        </label>
+
+        <select id="reservatorioSelect">
+
+            <option value="prototipo">
+                Protótipo NZAJI
+            </option>
+
+            <option value="imetro">
+                IMETRO (simulação)
+            </option>
+
+            <option value="centro">
+                Zona Centro (simulação)
+            </option>
+
+            <option value="norte">
+                Zona Norte (simulação)
+            </option>
+
+            <option value="sul">
+                Zona Sul (simulação)
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="controle">
+
+        <label>
+            Nível do Reservatório (%)
+        </label>
+
+        <input
+            type="range"
+            id="nivelInput"
+            min="0"
+            max="100"
+            value="0">
+
+        <span id="valorNivel">
+            0%
+        </span>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card level">
+            <h3>💧 Nível Atual</h3>
+            <h1 id="nivelAtualCard">--%</h1>
+        </div>
+
+        <div class="card volume">
+            <h3>📦 Volume Disponível</h3>
+            <h1 id="volumeDisponivel">-- L</h1>
+        </div>
+
+        <div class="card autonomia">
+            <h3>⏱️ Autonomia Atual</h3>
+            <h1 id="autonomiaReservatorio">--</h1>
+        </div>
+
+        <div class="card risco">
+            <h3>⚠️ Segurança Hídrica</h3>
+            <h1 id="segurancaReservatorio">--</h1>
+        </div>
+
+    </div>
+
+
+    <div class="assistant">
+
+        <h2>
+            🤖 ASSISTENTE NZAJI
+        </h2>
+
+        <p id="mensagemAI">
+            A aguardar dados do reservatório...
+        </p>
+
+    </div>
+
+
+    <div class="recomendacao">
+
+        <h2>
+            💡 RECOMENDAÇÃO NZAJI
+        </h2>
+
+        <p id="recomendacaoAI">
+            A analisar o estado do sistema...
+        </p>
+
+    </div>
+
+
+    <div class="assistant indicadores">
+
+        <h2>
+            🤖 INDICADORES INTELIGENTES
+        </h2>
+
+        <div class="indicadores-grid">
+
+            <div class="indicador-item">
+                <span>◉</span>
+                <p id="consumoIA">--</p>
+            </div>
+
+            <div class="indicador-item">
+                <span>●</span>
+                <p id="riscoIA">--</p>
+            </div>
+
+            <div class="indicador-item">
+                <span>⚙</span>
+                <p id="eficienciaIA">--</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="bottom">
+
+        <div class="box">
+
+            <h2>🚨 Alertas</h2>
+
+            <p id="alertaSistema">
+                A aguardar dados...
+            </p>
+
+        </div>
+
+
+        <div class="box">
+
+            <h2>📈 Tendência</h2>
+
+            <p id="prevHoje">
+                Nível atual: --%
+            </p>
+
+            <p id="prevAmanha">
+                Tendência: --
+            </p>
+
+            <p id="prev3Dias">
+                Dados: em recolha
+            </p>
+
+        </div>
+
+
+        <div class="box">
+
+            <h2>📊 Estado do Reservatório</h2>
+
+            <p id="estadoReservatorio">
+                --
+            </p>
+
+            <p id="estadoEnchimento">
+                Enchimento: --
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div id="graph" class="graph"></div>
+
+
+    <div class="stats">
+
+        <div class="mini-card">
+
+            <h3>
+                Consumo Acumulado
+            </h3>
+
+            <p id="consumoAcumulado">
+                0.000 L
+            </p>
+
+        </div>
+
+
+        <div class="mini-card">
+
+            <h3>
+                Caudal Atual
+            </h3>
+
+            <p id="caudalAtual">
+                0.00 L/min
+            </p>
+
+        </div>
+
+
+        <div class="mini-card">
+
+            <h3>
+                Modo
+            </h3>
+
+            <p id="modoSistema">
+                --
+            </p>
+
+        </div>
+
+
+        <div class="mini-card">
+
+            <h3>
+                Limite de Operação
+            </h3>
+
+            <p>
+                90% • 5.40 L
+            </p>
+
+        </div>
+
+
+        <div class="mini-card">
+
+            <h3>
+                Estado Geral
+            </h3>
+
+            <p id="estadoGeral">
+                --
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         RODAPÉ / COPYRIGHT
+    =================================================== -->
+
+    <footer class="footer-nzaji">
+
+        <div class="footer-line"></div>
+
+        <p class="footer-copyright">
+            © 2026 NZAJI • Todos os direitos reservados
+        </p>
+
+        <p class="footer-author">
+            Desenvolvido por Nelson Sami • Luanda, Angola
+        </p>
+
+    </footer>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
