@@ -52,6 +52,43 @@ const MAX_PONTOS = 10;
 
 
 // ======================================================
+// BLOQUEIO DO SLIDER NO PROTÓTIPO REAL
+// ======================================================
+
+function atualizarBloqueioNivel() {
+
+    const seletor =
+        document.getElementById(
+            "reservatorioSelect"
+        );
+
+    const slider =
+        document.getElementById(
+            "nivelInput"
+        );
+
+    const prototipoReal =
+        seletor.value === "prototipo";
+
+    slider.disabled =
+        prototipoReal;
+
+    slider.style.opacity =
+        "1";
+
+    slider.style.cursor =
+        prototipoReal
+            ? "not-allowed"
+            : "pointer";
+
+    slider.title =
+        prototipoReal
+            ? "Leitura em tempo real — controlada pelo NZAJI Cloud"
+            : "Arraste para simular o nível do reservatório";
+}
+
+
+// ======================================================
 // DESENHAR GRÁFICO
 // ======================================================
 
@@ -64,7 +101,6 @@ function desenharGrafico() {
         canvas.height
     );
 
-
     ctx.font =
         "bold 28px Arial";
 
@@ -74,13 +110,11 @@ function desenharGrafico() {
     ctx.textAlign =
         "center";
 
-
     ctx.fillText(
         "Histórico de Consumo",
         canvas.width / 2,
         34
     );
-
 
     if (
         historicoConsumo.length < 2
@@ -100,7 +134,6 @@ function desenharGrafico() {
 
         return;
     }
-
 
     const margemEsquerda = 85;
     const margemDireita = 1030;
@@ -149,7 +182,6 @@ function desenharGrafico() {
             0.1
         );
 
-
     maxConsumo =
         maxConsumo * 1.2;
 
@@ -169,7 +201,6 @@ function desenharGrafico() {
             i *
             ((base - topo) / 4);
 
-
         const valor =
             maxConsumo -
             (
@@ -177,7 +208,6 @@ function desenharGrafico() {
                 i /
                 4
             );
-
 
         ctx.beginPath();
 
@@ -199,7 +229,6 @@ function desenharGrafico() {
 
         ctx.stroke();
 
-
         ctx.font =
             "13px Arial";
 
@@ -208,7 +237,6 @@ function desenharGrafico() {
 
         ctx.textAlign =
             "right";
-
 
         ctx.fillText(
             valor.toFixed(2) + " L",
@@ -224,14 +252,12 @@ function desenharGrafico() {
 
     ctx.beginPath();
 
-
     historicoConsumo.forEach(
         (valor, index) => {
 
             const largura =
                 margemDireita -
                 margemEsquerda;
-
 
             const x =
                 margemEsquerda +
@@ -243,11 +269,9 @@ function desenharGrafico() {
                 ) *
                 largura;
 
-
             const alturaUtil =
                 base -
                 topo;
-
 
             const y =
                 base -
@@ -256,7 +280,6 @@ function desenharGrafico() {
                     maxConsumo
                 ) *
                 alturaUtil;
-
 
             if (
                 index === 0
@@ -277,7 +300,6 @@ function desenharGrafico() {
             }
         }
     );
-
 
     ctx.strokeStyle =
         "#2d7ef7";
@@ -305,7 +327,6 @@ function desenharGrafico() {
                 margemDireita -
                 margemEsquerda;
 
-
             const x =
                 margemEsquerda +
                 (
@@ -316,11 +337,9 @@ function desenharGrafico() {
                 ) *
                 largura;
 
-
             const alturaUtil =
                 base -
                 topo;
-
 
             const y =
                 base -
@@ -329,7 +348,6 @@ function desenharGrafico() {
                     maxConsumo
                 ) *
                 alturaUtil;
-
 
             ctx.beginPath();
 
@@ -341,12 +359,10 @@ function desenharGrafico() {
                 Math.PI * 2
             );
 
-
             ctx.fillStyle =
                 "#2d7ef7";
 
             ctx.fill();
-
 
             ctx.font =
                 "12px Arial";
@@ -356,7 +372,6 @@ function desenharGrafico() {
 
             ctx.textAlign =
                 "center";
-
 
             ctx.fillText(
                 historicoHora[index],
@@ -380,18 +395,15 @@ function atualizarHora() {
     const agora =
         new Date();
 
-
     const data =
         agora.toLocaleDateString(
             "pt-PT"
         );
 
-
     const hora =
         agora.toLocaleTimeString(
             "pt-PT"
         );
-
 
     document.getElementById(
         "updateTime"
@@ -445,7 +457,6 @@ function formatarTextoSistema(valor) {
             "Desligado"
     };
 
-
     return (
         textos[valor] ||
         valor
@@ -467,18 +478,15 @@ function aplicarEstadoVisual(
             "estadoReservatorio"
         );
 
-
     const estadoEnchimento =
         document.getElementById(
             "estadoEnchimento"
         );
 
-
     const estadoGeral =
         document.getElementById(
             "estadoGeral"
         );
-
 
     estadoReservatorio.classList.remove(
         "estado-critico",
@@ -487,12 +495,10 @@ function aplicarEstadoVisual(
         "estado-alto"
     );
 
-
     estadoEnchimento.classList.remove(
         "enchimento-ligado",
         "enchimento-desligado"
     );
-
 
     estadoGeral.classList.remove(
         "estado-geral-critico",
@@ -500,7 +506,6 @@ function aplicarEstadoVisual(
         "estado-geral-normal",
         "estado-geral-estavel"
     );
-
 
     if (
         estado === "CRITICO"
@@ -515,7 +520,6 @@ function aplicarEstadoVisual(
         );
     }
 
-
     else if (
         estado === "BAIXO"
     ) {
@@ -528,7 +532,6 @@ function aplicarEstadoVisual(
             "estado-geral-atencao"
         );
     }
-
 
     else if (
         estado === "NORMAL"
@@ -543,7 +546,6 @@ function aplicarEstadoVisual(
         );
     }
 
-
     else if (
         estado === "ALTO"
     ) {
@@ -556,7 +558,6 @@ function aplicarEstadoVisual(
             "estado-geral-estavel"
         );
     }
-
 
     if (
         enchimento === "LIGADO"
@@ -594,7 +595,6 @@ function atualizarEstado(
     let recomendacao = "";
     let estadoGeral = "";
 
-
     if (
         estado === "CRITICO"
     ) {
@@ -610,7 +610,6 @@ function atualizarEstado(
 
         estadoGeral =
             "Crítico";
-
 
         if (
             enchimento === "LIGADO"
@@ -632,7 +631,6 @@ function atualizarEstado(
                 "Verificar o sistema de abastecimento.";
         }
     }
-
 
     else if (
         estado === "BAIXO"
@@ -657,7 +655,6 @@ function atualizarEstado(
             "Acompanhar a evolução do nível e o funcionamento do enchimento.";
     }
 
-
     else if (
         estado === "NORMAL"
     ) {
@@ -681,7 +678,6 @@ function atualizarEstado(
             "Nenhuma intervenção necessária.";
     }
 
-
     else if (
         estado === "ALTO"
     ) {
@@ -697,7 +693,6 @@ function atualizarEstado(
 
         estadoGeral =
             "Estável";
-
 
         if (
             enchimento === "DESLIGADO"
@@ -720,7 +715,6 @@ function atualizarEstado(
         }
     }
 
-
     else {
 
         alerta =
@@ -742,42 +736,35 @@ function atualizarEstado(
             "Verificar os dados recebidos pelo sistema.";
     }
 
-
     document.getElementById(
         "alertaSistema"
     ).innerHTML =
         alerta;
-
 
     document.getElementById(
         "segurancaReservatorio"
     ).textContent =
         seguranca;
 
-
     document.getElementById(
         "riscoIA"
     ).textContent =
         risco;
-
 
     document.getElementById(
         "mensagemAI"
     ).textContent =
         mensagem;
 
-
     document.getElementById(
         "recomendacaoAI"
     ).textContent =
         recomendacao;
 
-
     document.getElementById(
         "estadoGeral"
     ).textContent =
         estadoGeral;
-
 
     document.getElementById(
         "modoSistema"
@@ -785,7 +772,6 @@ function atualizarEstado(
         formatarTextoSistema(
             modo
         );
-
 
     aplicarEstadoVisual(
         estado,
@@ -807,21 +793,17 @@ function calcularTendencia() {
         return "A recolher dados";
     }
 
-
     const primeiro =
         historicoNivel[0];
-
 
     const ultimo =
         historicoNivel[
             historicoNivel.length - 1
         ];
 
-
     const diferenca =
         ultimo -
         primeiro;
-
 
     if (
         diferenca > 2
@@ -830,14 +812,12 @@ function calcularTendencia() {
         return "⬆ Nível a subir";
     }
 
-
     if (
         diferenca < -2
     ) {
 
         return "⬇ Nível a descer";
     }
-
 
     return "→ Nível estável";
 }
@@ -859,11 +839,9 @@ function calcularAutonomia(
         return "Sem consumo";
     }
 
-
     const minutos =
         volume /
         caudal;
-
 
     if (
         minutos < 1
@@ -871,7 +849,6 @@ function calcularAutonomia(
 
         return "< 1 min";
     }
-
 
     if (
         minutos < 60
@@ -883,11 +860,9 @@ function calcularAutonomia(
         );
     }
 
-
     const horas =
         minutos /
         60;
-
 
     return (
         horas.toFixed(1) +
@@ -917,7 +892,6 @@ const reservatorios = {
             "Monitorização regular recomendada."
     },
 
-
     centro: {
 
         nivel: 91,
@@ -933,7 +907,6 @@ const reservatorios = {
             "Nenhuma ação necessária."
     },
 
-
     norte: {
 
         nivel: 45,
@@ -948,7 +921,6 @@ const reservatorios = {
         recomendacao:
             "Preparar abastecimento."
     },
-
 
     sul: {
 
@@ -981,6 +953,7 @@ document.getElementById(
         const selecionado =
             this.value;
 
+        atualizarBloqueioNivel();
 
         if (
             selecionado === "prototipo"
@@ -991,18 +964,15 @@ document.getElementById(
             return;
         }
 
-
         const dados =
             reservatorios[
                 selecionado
             ];
 
-
         document.getElementById(
             "nivelInput"
         ).value =
             dados.nivel;
-
 
         document.getElementById(
             "valorNivel"
@@ -1010,13 +980,11 @@ document.getElementById(
             dados.nivel +
             "%";
 
-
         document.getElementById(
             "nivelAtualCard"
         ).textContent =
             dados.nivel +
             "%";
-
 
         document.getElementById(
             "volumeDisponivel"
@@ -1024,18 +992,15 @@ document.getElementById(
             dados.volume.toFixed(2) +
             " L";
 
-
         document.getElementById(
             "autonomiaReservatorio"
         ).textContent =
             dados.autonomia;
 
-
         document.getElementById(
             "segurancaReservatorio"
         ).textContent =
             dados.seguranca;
-
 
         document.getElementById(
             "estadoReservatorio"
@@ -1044,42 +1009,35 @@ document.getElementById(
                 dados.estado
             );
 
-
         document.getElementById(
             "estadoEnchimento"
         ).textContent =
             "Enchimento: Simulado";
-
 
         document.getElementById(
             "mensagemAI"
         ).textContent =
             dados.mensagem;
 
-
         document.getElementById(
             "recomendacaoAI"
         ).textContent =
             dados.recomendacao;
-
 
         document.getElementById(
             "consumoAcumulado"
         ).textContent =
             "--";
 
-
         document.getElementById(
             "caudalAtual"
         ).textContent =
             "--";
 
-
         document.getElementById(
             "modoSistema"
         ).textContent =
             "Simulação";
-
 
         document.getElementById(
             "estadoGeral"
@@ -1088,12 +1046,10 @@ document.getElementById(
                 dados.estado
             );
 
-
         document.getElementById(
             "consumoIA"
         ).textContent =
             "Simulado";
-
 
         if (
             dados.estado === "ALTO" ||
@@ -1114,12 +1070,10 @@ document.getElementById(
                 "Moderado";
         }
 
-
         document.getElementById(
             "eficienciaIA"
         ).textContent =
             "Simulação";
-
 
         document.getElementById(
             "prevHoje"
@@ -1128,18 +1082,15 @@ document.getElementById(
             dados.nivel +
             "%";
 
-
         document.getElementById(
             "prevAmanha"
         ).textContent =
             "Tendência: cenário demonstrativo";
 
-
         document.getElementById(
             "prev3Dias"
         ).textContent =
             "Dados: simulados";
-
 
         aplicarEstadoVisual(
             dados.estado,
@@ -1160,7 +1111,6 @@ async function buscarDadosNZAJI() {
             "reservatorioSelect"
         ).value;
 
-
     if (
         reservatorioSelecionado !==
         "prototipo"
@@ -1169,14 +1119,12 @@ async function buscarDadosNZAJI() {
         return;
     }
 
-
     try {
 
         const resposta =
             await fetch(
                 URL_THINGSPEAK
             );
-
 
         if (
             !resposta.ok
@@ -1187,10 +1135,8 @@ async function buscarDadosNZAJI() {
             );
         }
 
-
         const respostaThingSpeak =
             await resposta.json();
-
 
         if (
             !respostaThingSpeak.feeds ||
@@ -1201,7 +1147,6 @@ async function buscarDadosNZAJI() {
                 "Nenhum dado disponível no ThingSpeak"
             );
         }
-
 
         const feed =
             respostaThingSpeak.feeds[0];
@@ -1216,44 +1161,36 @@ async function buscarDadosNZAJI() {
                 feed.field1
             );
 
-
         const caudal =
             Number(
                 feed.field2
             );
-
 
         const consumo =
             Number(
                 feed.field3
             );
 
-
         const estado =
             feed.field4 || "--";
-
 
         const enchimento =
             feed.field5 === "1"
                 ? "LIGADO"
                 : "DESLIGADO";
 
-
         const modo =
             feed.field6 === "1"
                 ? "MANUAL"
                 : "AUTOMATICO";
 
-
         const nivelValido =
             feed.field7 === "1";
-
 
         let volume =
             Number(
                 feed.field8
             );
-
 
         if (
             !Number.isFinite(volume)
@@ -1281,12 +1218,10 @@ async function buscarDadosNZAJI() {
             ).textContent =
                 "Sensor inválido";
 
-
             document.getElementById(
                 "alertaSistema"
             ).innerHTML =
                 "🔴 Falha de leitura<br>Verificar sensor de nível";
-
 
             return;
         }
@@ -1302,13 +1237,11 @@ async function buscarDadosNZAJI() {
             nivel.toFixed(1) +
             "%";
 
-
         document.getElementById(
             "valorNivel"
         ).textContent =
             nivel.toFixed(1) +
             "%";
-
 
         document.getElementById(
             "nivelInput"
@@ -1455,7 +1388,6 @@ async function buscarDadosNZAJI() {
                 feed.entry_id
             );
 
-
         if (
             entryId !== ultimoEntryId
         ) {
@@ -1463,22 +1395,18 @@ async function buscarDadosNZAJI() {
             ultimoEntryId =
                 entryId;
 
-
             historicoConsumo.push(
                 consumo
             );
-
 
             historicoNivel.push(
                 nivel
             );
 
-
             const horaThingSpeak =
                 new Date(
                     feed.created_at
                 );
-
 
             historicoHora.push(
                 horaThingSpeak.toLocaleTimeString(
@@ -1496,7 +1424,6 @@ async function buscarDadosNZAJI() {
                 )
             );
 
-
             if (
                 historicoConsumo.length >
                 MAX_PONTOS
@@ -1509,7 +1436,6 @@ async function buscarDadosNZAJI() {
                 historicoHora.shift();
             }
 
-
             desenharGrafico();
         }
 
@@ -1521,7 +1447,6 @@ async function buscarDadosNZAJI() {
         const tendencia =
             calcularTendencia();
 
-
         document.getElementById(
             "prevHoje"
         ).textContent =
@@ -1529,13 +1454,11 @@ async function buscarDadosNZAJI() {
             nivel.toFixed(1) +
             "%";
 
-
         document.getElementById(
             "prevAmanha"
         ).textContent =
             "Tendência: " +
             tendencia;
-
 
         document.getElementById(
             "prev3Dias"
@@ -1563,18 +1486,15 @@ async function buscarDadosNZAJI() {
             erro
         );
 
-
         document.getElementById(
             "estadoReservatorio"
         ).textContent =
             "Sem comunicação";
 
-
         document.getElementById(
             "estadoEnchimento"
         ).textContent =
             "Enchimento: --";
-
 
         document.getElementById(
             "alertaSistema"
@@ -1587,6 +1507,8 @@ async function buscarDadosNZAJI() {
 // ======================================================
 // INÍCIO
 // ======================================================
+
+atualizarBloqueioNivel();
 
 buscarDadosNZAJI();
 
